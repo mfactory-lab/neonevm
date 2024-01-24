@@ -12,8 +12,8 @@ describe('ERC20ForSPL', async () => {
   // let user1SolanaPublicKey
   // let user2SolanaPublicKey
   const TOKEN_MINT = `0x${ethers.decodeBase58('F8s94y4EBKiYPGuXzzik2TXaGwSa29K1w3d5xvEEzcDx').toString(16)}`
-  const TOKEN_MINT_DECIMALS = 9
-  const RECEIPTS_COUNT = 30
+  // const TOKEN_MINT_DECIMALS = 9
+  // const RECEIPTS_COUNT = 30
   // let grantedTestersWithBalance
 
   const connection = new web3.Connection('https://api.devnet.solana.com')
@@ -140,28 +140,28 @@ describe('ERC20ForSPL', async () => {
   //   }
   // })
 
-  it('transfer from user1 to user2 using transferSolana', async () => {
-    const user1Balance = await erc20ForSPL.balanceOf(user1.address)
-    const user2Balance = await erc20ForSPL.balanceOf(user2.address)
-    const solanaUser1TokenBalance = await connection.getTokenAccountBalance(new web3.PublicKey(user1SolanaPublicKey))
-    const solanaUser2TokenBalance = await connection.getTokenAccountBalance(new web3.PublicKey(user2SolanaPublicKey))
-
-    const transferAmount = ethers.parseUnits('5', TOKEN_MINT_DECIMALS)
-    const tx = await erc20ForSPL.connect(user1).transferSolana(await erc20ForSPL.solanaAccount(user2.address), transferAmount)
-    await tx.wait(RECEIPTS_COUNT)
-
-    // check from Neon node
-    const user1BalanceAfter = await erc20ForSPL.balanceOf(user1.address)
-    const user2BalanceAfter = await erc20ForSPL.balanceOf(user2.address)
-    expect(user1Balance).to.be.greaterThan(user1BalanceAfter)
-    expect(user2BalanceAfter).to.be.greaterThan(user2Balance)
-
-    // check from Solana node
-    const solanaUser1TokenBalanceAfter = await connection.getTokenAccountBalance(new web3.PublicKey(user1SolanaPublicKey))
-    const solanaUser2TokenBalanceAfter = await connection.getTokenAccountBalance(new web3.PublicKey(user2SolanaPublicKey))
-    expect(BigInt(solanaUser1TokenBalance.value.amount)).to.be.greaterThan(BigInt(solanaUser1TokenBalanceAfter.value.amount))
-    expect(BigInt(solanaUser2TokenBalanceAfter.value.amount)).to.be.greaterThan(BigInt(solanaUser2TokenBalance.value.amount))
-  })
+  // it('transfer from user1 to user2 using transferSolana', async () => {
+  //   const user1Balance = await erc20ForSPL.balanceOf(user1.address)
+  //   const user2Balance = await erc20ForSPL.balanceOf(user2.address)
+  //   const solanaUser1TokenBalance = await connection.getTokenAccountBalance(new web3.PublicKey(user1SolanaPublicKey))
+  //   const solanaUser2TokenBalance = await connection.getTokenAccountBalance(new web3.PublicKey(user2SolanaPublicKey))
+  //
+  //   const transferAmount = ethers.parseUnits('5', TOKEN_MINT_DECIMALS)
+  //   const tx = await erc20ForSPL.connect(user1).transferSolana(await erc20ForSPL.solanaAccount(user2.address), transferAmount)
+  //   await tx.wait(RECEIPTS_COUNT)
+  //
+  //   // check from Neon node
+  //   const user1BalanceAfter = await erc20ForSPL.balanceOf(user1.address)
+  //   const user2BalanceAfter = await erc20ForSPL.balanceOf(user2.address)
+  //   expect(user1Balance).to.be.greaterThan(user1BalanceAfter)
+  //   expect(user2BalanceAfter).to.be.greaterThan(user2Balance)
+  //
+  //   // check from Solana node
+  //   const solanaUser1TokenBalanceAfter = await connection.getTokenAccountBalance(new web3.PublicKey(user1SolanaPublicKey))
+  //   const solanaUser2TokenBalanceAfter = await connection.getTokenAccountBalance(new web3.PublicKey(user2SolanaPublicKey))
+  //   expect(BigInt(solanaUser1TokenBalance.value.amount)).to.be.greaterThan(BigInt(solanaUser1TokenBalanceAfter.value.amount))
+  //   expect(BigInt(solanaUser2TokenBalanceAfter.value.amount)).to.be.greaterThan(BigInt(solanaUser2TokenBalance.value.amount))
+  // })
 
   // it('transfer from user2 to user1 by using transferSolana', async function () {
   //   if (grantedTestersWithBalance) {

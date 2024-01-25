@@ -41,7 +41,7 @@ export async function sendSolanaTransaction(
   return signature
 }
 
-async function _createTokenMetadata(solanaUrl: string, wallet: Uint8Array, mint: string, data: DataV2Args) {
+export async function createTokenMetadata(solanaUrl: string, wallet: Uint8Array, mint: string, data: DataV2Args) {
   const umi = createUmi(solanaUrl)
   const keypair = umi.eddsa.createKeypairFromSecretKey(wallet)
   const signerKeypair = createSignerFromKeypair(umi, keypair)
@@ -66,7 +66,7 @@ async function _createTokenMetadata(solanaUrl: string, wallet: Uint8Array, mint:
   const result = await tx.sendAndConfirm(umi)
   const signature = base58.deserialize(result.signature)
   console.log(
-      `Succesfully Minted!. Transaction Here: https://solana.fm/tx/${signature[0]}?cluster=devnet`,
+      `Successfully Minted!. Transaction Here: https://solana.fm/tx/${signature[0]}?cluster=devnet`,
   )
 }
 

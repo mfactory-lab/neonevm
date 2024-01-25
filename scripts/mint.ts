@@ -9,12 +9,15 @@ async function main() {
   const authority = Keypair.fromSecretKey(Uint8Array.from(wallet))
   console.log(`Authority: ${authority.publicKey}`)
 
-  const mint = new PublicKey(tokenList.JSOL.address_spl)
+  const token = tokenList.TEST2
+
+  const mint = new PublicKey(token.address_spl)
   console.log(`Mint: ${mint}`)
 
   // token receiver
   const user = authority.publicKey
   const userToken = await getOrCreateAssociatedTokenAccount(connection, authority, mint, user)
+  console.log(`Token Account: ${userToken.address}`)
 
   const sig = await mintTo(connection, authority, mint, userToken.address, authority, 100_000_000_000)
 

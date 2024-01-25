@@ -15,8 +15,8 @@ async function main() {
   const neonProxyApi = new NeonProxyRpcApi({ neonProxyRpcApi: NEON_DEVNET, solanaRpcApi: SOLANA_DEVNET })
   const neonProxyStatus = await neonProxyApi.evmParams()
 
-  const amount = 10
-  const token = tokenList.JSOL
+  const amount = 1
+  const token = tokenList.TEST
   const solanaWallet = Keypair.fromSecretKey(Uint8Array.from(wallet))
   const neonWallet = '0xefF995523fe0d1B83c2034671A0977421bf288Fc'
 

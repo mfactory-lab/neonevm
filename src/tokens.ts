@@ -1,4 +1,6 @@
 export default {
+  // ERC20ForSPL proxy deployed to 0x2cc12c6477cA4F4b703c81670C3a85993A6464Ef
+  // ERC20ForSPL implementation deployed to 0x06Ba5aD1FFEbEcED980dB10bDD5B327e783a7340
   JSOL: {
     chainId: 245022926, // devnet
     // chainId: 245022934, // mainnet

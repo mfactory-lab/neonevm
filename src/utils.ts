@@ -15,6 +15,13 @@ import {
 } from '@metaplex-foundation/mpl-token-metadata'
 import { createSignerFromKeypair, publicKey, signerIdentity } from '@metaplex-foundation/umi'
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults'
+import type { TransactionConfig } from 'web3-core'
+import type Web3 from 'web3'
+
+export async function sendNeonTransaction(web3: Web3, tx: TransactionConfig, signer: string) {
+  const signedTrx = await web3.eth.accounts.signTransaction(tx as any, signer)
+  return web3.eth.sendSignedTransaction(signedTrx.rawTransaction)
+}
 
 export async function sendSolanaTransaction(
   connection: Connection,
@@ -33,24 +40,6 @@ export async function sendSolanaTransaction(
   }
   return signature
 }
-
-// export async function sendNeonTransaction(web3: Web3, transaction: TransactionConfig, account: Account): Promise<string> {
-//   const signedTrx = await web3.eth.accounts.signTransaction(transaction, account.privateKey)
-//   return new Promise((resolve, reject) => {
-//     if (signedTrx?.rawTransaction) {
-//       web3.eth.sendSignedTransaction(signedTrx.rawTransaction, (error, hash) => {
-//         if (error) {
-//           reject(error)
-//         } else {
-//           resolve(hash)
-//         }
-//       })
-//     } else {
-//       // eslint-disable-next-line prefer-promise-reject-errors
-//       reject('Unknown transaction')
-//     }
-//   })
-// }
 
 async function _createTokenMetadata(solanaUrl: string, wallet: Uint8Array, mint: string, data: DataV2Args) {
   const umi = createUmi(solanaUrl)

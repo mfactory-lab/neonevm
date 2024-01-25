@@ -8,9 +8,9 @@
 import { Connection, Keypair, PublicKey } from '@solana/web3.js'
 import Web3 from 'web3'
 import { NeonProxyRpcApi, neonTransferMintWeb3Transaction } from '@neonevm/token-transfer'
-import wallet from '../NeonTFZMoqL31gZCwcJXKaSDHLhSS5JtpCjnjvLg2nb.json'
 import { sendSolanaTransaction } from '../src/utils'
-import tokenInfo from './token.json'
+import wallet from '../NeonTFZMoqL31gZCwcJXKaSDHLhSS5JtpCjnjvLg2nb.json'
+import tokenList from '../src/tokens'
 
 const SOLANA_DEVNET = 'https://api.devnet.solana.com'
 const NEON_DEVNET = 'https://devnet.neonevm.org'
@@ -19,22 +19,11 @@ async function main() {
   const connection = new Connection(SOLANA_DEVNET, 'confirmed')
   const web3 = new Web3(NEON_DEVNET)
 
-  const mint = new PublicKey('F8s94y4EBKiYPGuXzzik2TXaGwSa29K1w3d5xvEEzcDx')
-
-  const token = {
-    chainId: 245022926, // devnet
-    // chainId: 245022934, // mainnet
-    address_spl: mint.toString(),
-    address: '0x2cc12c6477cA4F4b703c81670C3a85993A6464Ef',
-    decimals: 9,
-    name: tokenInfo.name,
-    symbol: tokenInfo.symbol,
-    logoURI: tokenInfo.image,
-  }
-
   const neonProxyApi = new NeonProxyRpcApi({ neonProxyRpcApi: NEON_DEVNET, solanaRpcApi: SOLANA_DEVNET })
   const neonProxyStatus = await neonProxyApi.evmParams()
 
+  const amount = 10
+  const token = tokenList.JSOL
   const solanaWallet = Keypair.fromSecretKey(Uint8Array.from(wallet))
   const neonWallet = '0xefF995523fe0d1B83c2034671A0977421bf288Fc'
 
@@ -47,9 +36,11 @@ async function main() {
     solanaWallet.publicKey,
     neonWallet,
     token,
-    10,
+    amount,
     token.chainId,
   )
+
+  console.log(`Transferring ${amount} ${token.symbol} tokens from ${solanaWallet.publicKey} to ${neonWallet}...`)
 
   const sig = await sendSolanaTransaction(connection, tx, [solanaWallet], true)
 

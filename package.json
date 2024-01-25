@@ -5,7 +5,8 @@
   "scripts": {
     "deploy": "npx hardhat run scripts/deploy.ts",
     "mint": "npx hardhat run scripts/mint.ts",
-    "transfer": "npx hardhat run scripts/transfer.ts",
+    "sol2neon": "npx hardhat run scripts/sol2neon.ts",
+    "neon2sol": "npx hardhat run scripts/neon2sol.ts",
     "test": "npx hardhat test --parallel",
     "dev": "vite-node ./src/index.ts --"
   },

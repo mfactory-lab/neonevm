@@ -39,11 +39,11 @@ task<TaskParams>('createPoolTokenMetadata', 'Create Pool Token Metadata')
       const umi = createUmi(connection.rpcEndpoint)
       umi.use(irysUploader())
       umi.use(keypairIdentity(umi.eddsa.createKeypairFromSecretKey(authority.secretKey)))
-      console.log('Uploading metadata...')
+      console.log(`Uploading metadata ${params.metadata}...`)
       uri = await umi.uploader.uploadJson(metadata)
+      console.log('Metadata uri:', uri)
     } else {
       uri = params.uri
-      console.log('Metadata uri:', uri)
     }
 
     const { instructions } = await createPoolTokenMetadata({

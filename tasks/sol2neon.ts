@@ -7,11 +7,10 @@ import {
   neonTransferMintWeb3Transaction,
 } from '@neonevm/token-transfer'
 import Web3 from 'web3'
+import type { HttpNetworkConfig } from 'hardhat/types'
 import { sendSolanaTransaction } from '../src/utils'
 import {
-  DEFAULT_NEON_RPC,
   DEFAULT_NEON_TOKEN,
-  DEFAULT_NEON_WALLET,
   DEFAULT_SOLANA_CLUSTER,
   DEFAULT_SOLANA_KEYPAIR,
 } from './constants'
@@ -19,7 +18,6 @@ import {
 type TaskParams = {
   solanaCluster: Cluster
   solanaWallet: string
-  neonRpc: string
   neonWallet: string
   token: string
   amount: number
@@ -28,20 +26,18 @@ type TaskParams = {
 task<TaskParams>('sol2neon', 'Transfer SOL to Neon')
   .addParam<Cluster>('solanaCluster', 'Solana Cluster', DEFAULT_SOLANA_CLUSTER)
   .addParam('solanaWallet', 'Solana Wallet', DEFAULT_SOLANA_KEYPAIR)
-  .addParam('neonRpc', 'Neon RPC', DEFAULT_NEON_RPC)
-  .addParam('neonWallet', 'Neon Wallet Address (0x...)', DEFAULT_NEON_WALLET)
+  .addOptionalParam('neonWallet', 'Neon Wallet Address (optional)')
   .addParam('token', 'Token Json File Path', DEFAULT_NEON_TOKEN)
   .addParam('amount', 'Amount', '1')
-  .setAction(async (params) => {
+  .setAction(async (params, hre) => {
     const token = JSON.parse(String(readFileSync(params.token)))
     const connection = new Connection(clusterApiUrl(params.solanaCluster), 'confirmed')
     const solanaWallet = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(String(readFileSync(params.solanaWallet)))))
 
-    const web3 = new Web3(params.neonRpc)
-    const neonProxyApi = new NeonProxyRpcApi({
-      neonProxyRpcApi: params.neonRpc,
-      solanaRpcApi: connection.rpcEndpoint,
-    })
+    const conf = hre.network.config as HttpNetworkConfig
+
+    const web3 = new Web3(conf.url)
+    const neonProxyApi = new NeonProxyRpcApi({ neonProxyRpcApi: conf.url, solanaRpcApi: connection.rpcEndpoint })
     const neonProxyStatus = await neonProxyApi.evmParams()
 
     const tx = await neonTransferMintWeb3Transaction(
@@ -53,7 +49,7 @@ task<TaskParams>('sol2neon', 'Transfer SOL to Neon')
       solanaWallet.publicKey,
       params.neonWallet,
       token,
-      params.amount,
+      Number(params.amount),
       token.chainId,
     )
 

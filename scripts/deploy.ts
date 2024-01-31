@@ -1,15 +1,14 @@
 import { readFileSync } from 'node:fs'
-import { ethers, upgrades } from 'hardhat'
+import { ethers, network, upgrades } from 'hardhat'
 import { expect } from 'chai'
 
-/**
- * Deployment cost ~1.6721 NEON
- */
+const TOKEN_PATH = './assets/tokens/jsol.json'
+
 async function main() {
   const [owner] = await ethers.getSigners()
   const ERC20ForSPLFactory = await ethers.getContractFactory('ERC20ForSPL')
 
-  const token = JSON.parse(String(readFileSync('./assets/tokens/test.json')))
+  const token = JSON.parse(String(readFileSync(TOKEN_PATH)))
 
   console.log(`Owner ${owner.address}...`)
   console.log(`Deploying token ${token.symbol}...`)
@@ -28,7 +27,12 @@ async function main() {
 
   console.log(`ERC20ForSPL proxy deployed to ${ERC20ForSPL.target}`)
   console.log(`ERC20ForSPL implementation deployed to ${IMPLEMENTATION}`)
-  console.log(`https://devnet.neonscan.org/token/${ERC20ForSPL.target}`)
+
+  if (network.name === 'neondevnet') {
+    console.log(`https://devnet.neonscan.org/token/${ERC20ForSPL.target}`)
+  } else {
+    console.log(`https://neonscan.org/token/${ERC20ForSPL.target}`)
+  }
 
   expect(owner.address).to.eq(CONTRACT_OWNER)
 }

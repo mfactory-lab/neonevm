@@ -1,14 +1,15 @@
+import { readFileSync } from 'node:fs'
 import { ethers, upgrades } from 'hardhat'
 import { expect } from 'chai'
-import tokenList from '../src/tokens'
 
-// 915163
-
+/**
+ * Deployment cost ~1.6721 NEON
+ */
 async function main() {
   const [owner] = await ethers.getSigners()
   const ERC20ForSPLFactory = await ethers.getContractFactory('ERC20ForSPL')
 
-  const token = tokenList.TEST2
+  const token = JSON.parse(String(readFileSync('./assets/tokens/test.json')))
 
   console.log(`Owner ${owner.address}...`)
   console.log(`Deploying token ${token.symbol}...`)

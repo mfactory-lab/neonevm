@@ -5,6 +5,8 @@ import { resolve } from 'node:path'
 import { config as dotenvConfig } from 'dotenv'
 import type { HardhatUserConfig } from 'hardhat/config'
 
+import './tasks'
+
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || './.env'
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) })
 

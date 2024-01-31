@@ -6,7 +6,7 @@ import { createUmi } from '@metaplex-foundation/umi-bundle-defaults'
 import { keypairIdentity } from '@metaplex-foundation/umi'
 import { createPoolTokenMetadata } from '@solana/spl-stake-pool'
 import { sendSolanaTransaction } from '../src/utils'
-import { DEFAULT_SOLANA_CLUSTER, DEFAULT_SOLANA_KEYPAIR } from './index'
+import { DEFAULT_SOLANA_CLUSTER, DEFAULT_SOLANA_KEYPAIR } from './constants'
 
 type TaskParams = {
   cluster: Cluster

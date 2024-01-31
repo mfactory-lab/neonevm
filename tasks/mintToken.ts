@@ -3,7 +3,7 @@ import { task } from 'hardhat/config'
 import type { Cluster } from '@solana/web3.js'
 import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, clusterApiUrl } from '@solana/web3.js'
 import { getOrCreateAssociatedTokenAccount, mintTo } from '@solana/spl-token'
-import { DEFAULT_SOLANA_CLUSTER, DEFAULT_SOLANA_KEYPAIR } from './index'
+import { DEFAULT_SOLANA_CLUSTER, DEFAULT_SOLANA_KEYPAIR } from './constants'
 
 type TaskParams = {
   cluster: Cluster

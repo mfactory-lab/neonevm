@@ -8,9 +8,13 @@ import {
 } from '@neonevm/token-transfer'
 import Web3 from 'web3'
 import { sendSolanaTransaction } from '../src/utils'
-import { DEFAULT_NEON_RPC, DEFAULT_NEON_TOKEN, DEFAULT_SOLANA_CLUSTER, DEFAULT_SOLANA_KEYPAIR } from './index'
-
-const DEFAULT_NEON_WALLET = '0x73708692b2b67cf2732fd81610cc310da4a364a5592b38f37f9fe500b64840f4'
+import {
+  DEFAULT_NEON_RPC,
+  DEFAULT_NEON_TOKEN,
+  DEFAULT_NEON_WALLET,
+  DEFAULT_SOLANA_CLUSTER,
+  DEFAULT_SOLANA_KEYPAIR,
+} from './constants'
 
 type TaskParams = {
   solanaCluster: Cluster

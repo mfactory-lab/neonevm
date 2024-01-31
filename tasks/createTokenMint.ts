@@ -4,7 +4,7 @@ import type { Cluster } from '@solana/web3.js'
 import { Keypair } from '@solana/web3.js'
 import { createMint } from '@solana/spl-token'
 import { createSolanaConnection, createTokenMetadata } from '../src/utils'
-import { DEFAULT_NEON_TOKEN, DEFAULT_SOLANA_CLUSTER, DEFAULT_SOLANA_KEYPAIR } from './index'
+import { DEFAULT_NEON_TOKEN, DEFAULT_SOLANA_CLUSTER, DEFAULT_SOLANA_KEYPAIR } from './constants'
 
 type TaskParams = {
   cluster: Cluster

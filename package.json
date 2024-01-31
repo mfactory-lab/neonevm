@@ -33,7 +33,7 @@
     "@openzeppelin/contracts": "^5.0.0",
     "@openzeppelin/contracts-upgradeable": "^5.0.0",
     "@openzeppelin/hardhat-upgrades": "^2.3.3",
-    "@solana/spl-stake-pool": "mfactory-lab/jfactory-stake-pool#77f0ca0",
+    "@solana/spl-stake-pool": "mfactory-lab/jfactory-stake-pool#12b39b5",
     "@typechain/ethers-v6": "^0.5.0",
     "@typechain/hardhat": "^9.0.0",
     "@types/chai": "^4.2.0",

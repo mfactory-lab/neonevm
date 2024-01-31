@@ -5,6 +5,7 @@ import { Connection, Keypair, PublicKey, Transaction, clusterApiUrl } from '@sol
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults'
 import { keypairIdentity } from '@metaplex-foundation/umi'
 import { createPoolTokenMetadata } from '@solana/spl-stake-pool'
+import { irysUploader } from '@metaplex-foundation/umi-uploader-irys'
 import { sendSolanaTransaction } from '../src/utils'
 import { DEFAULT_SOLANA_CLUSTER, DEFAULT_SOLANA_KEYPAIR } from './constants'
 
@@ -36,6 +37,7 @@ task<TaskParams>('createPoolTokenMetadata', 'Create Pool Token Metadata')
     let uri: string
     if (!params.uri) {
       const umi = createUmi(connection.rpcEndpoint)
+      umi.use(irysUploader())
       umi.use(keypairIdentity(umi.eddsa.createKeypairFromSecretKey(authority.secretKey)))
       console.log('Uploading metadata...')
       uri = await umi.uploader.uploadJson(metadata)

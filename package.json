@@ -19,7 +19,7 @@
     "@metaplex-foundation/umi-bundle-defaults": "^0.9.0",
     "@metaplex-foundation/umi-uploader-irys": "^0.9.0",
     "@neonevm/token-transfer": "^3.0.1",
-    "@solana/spl-stake-pool": "mfactory-lab/jfactory-stake-pool#a2a8e91",
+    "@solana/spl-stake-pool": "mfactory-lab/jfactory-stake-pool#af1b3dc",
     "@solana/spl-token": "^0.3.11",
     "@solana/web3.js": "^1.89.1",
     "web3": "^4.4.0"

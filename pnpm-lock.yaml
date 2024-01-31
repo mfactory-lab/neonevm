@@ -21,8 +21,8 @@ dependencies:
     specifier: ^3.0.1
     version: 3.0.1
   '@solana/spl-stake-pool':
-    specifier: mfactory-lab/jfactory-stake-pool#a2a8e91
-    version: github.com/mfactory-lab/jfactory-stake-pool/a2a8e91
+    specifier: mfactory-lab/jfactory-stake-pool#af1b3dc
+    version: github.com/mfactory-lab/jfactory-stake-pool/af1b3dc
   '@solana/spl-token':
     specifier: ^0.3.11
     version: 0.3.11(@solana/web3.js@1.89.1)
@@ -9901,8 +9901,8 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
-  github.com/mfactory-lab/jfactory-stake-pool/a2a8e91:
-    resolution: {tarball: https://codeload.github.com/mfactory-lab/jfactory-stake-pool/tar.gz/a2a8e91}
+  github.com/mfactory-lab/jfactory-stake-pool/af1b3dc:
+    resolution: {tarball: https://codeload.github.com/mfactory-lab/jfactory-stake-pool/tar.gz/af1b3dc}
     name: '@solana/spl-stake-pool'
     version: 1.0.0
     dependencies:

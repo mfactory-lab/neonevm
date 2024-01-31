@@ -13,7 +13,7 @@ type TaskParams = {
   manager: string
   metadata: string
   stakePool: string
-  uri: string
+  uri?: string
 }
 
 task<TaskParams>('createPoolTokenMetadata', 'Create Pool Token Metadata')
@@ -21,7 +21,7 @@ task<TaskParams>('createPoolTokenMetadata', 'Create Pool Token Metadata')
   .addParam('manager', 'Manager Keypair', DEFAULT_SOLANA_KEYPAIR)
   .addParam('metadata', 'Metadata Json File Path', './assets/metadata.json')
   .addParam('stakePool', 'Stake Pool Address')
-  .addParam('uri', 'Metadata URI')
+  .addOptionalParam('uri', 'Metadata URI')
   .setAction(async (params) => {
     const connection = new Connection(clusterApiUrl(params.cluster), 'confirmed')
     const authority = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(String(readFileSync(params.manager)))))
@@ -33,9 +33,16 @@ task<TaskParams>('createPoolTokenMetadata', 'Create Pool Token Metadata')
 
     const metadata = JSON.parse(String(readFileSync(params.metadata)))
 
-    const umi = createUmi(connection.rpcEndpoint)
-    umi.use(keypairIdentity(umi.eddsa.createKeypairFromSecretKey(authority.secretKey)))
-    const uri = await umi.uploader.uploadJson(metadata)
+    let uri: string
+    if (!params.uri) {
+      const umi = createUmi(connection.rpcEndpoint)
+      umi.use(keypairIdentity(umi.eddsa.createKeypairFromSecretKey(authority.secretKey)))
+      console.log('Uploading metadata...')
+      uri = await umi.uploader.uploadJson(metadata)
+    } else {
+      uri = params.uri
+      console.log('Metadata uri:', uri)
+    }
 
     const { instructions } = await createPoolTokenMetadata({
       name: metadata.name,

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.23;
 
-import './ERC20ForSPL.sol';
+import "./ERC20ForSPL.sol";
 
 
 /// @title ERC20ForSPLMintable

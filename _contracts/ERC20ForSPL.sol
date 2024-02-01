@@ -9,16 +9,19 @@ import './interfaces/IMetaplex.sol';
 
 /// @title ERC20ForSPL
 /// @author https://twitter.com/mnedelchev_
-/// @notice This contract serve as an interface of alrready deployed SPLToken on Solana. Thru this interface Ethereum-like address on Neon chain can apply changes on Solana
+/// @notice This contract serve as an interface of already deployed SPLToken on Solana. Thru this interface Ethereum-like address on Neon chain can apply changes on Solana
 /// @custom:oz-upgrades-unsafe-allow constructor
 contract ERC20ForSPL is OwnableUpgradeable, UUPSUpgradeable {
     ISPLToken public constant SPL_TOKEN = ISPLToken(0xFf00000000000000000000000000000000000004);
     IMetaplex public constant METAPLEX = IMetaplex(0xff00000000000000000000000000000000000005);
-    bytes32 public tokenMint;
+
+    bytes32 immutable public tokenMint;
+
     mapping(address => mapping(address => uint256)) private _allowances;
 
     event Transfer(address indexed from, address indexed to, uint256 amount);
     event Approval(address indexed owner, address indexed spender, uint256 amount);
+
     event ApprovalSolana(address indexed owner, bytes32 indexed spender, uint64 amount);
     event TransferSolana(address indexed from, bytes32 indexed to, uint64 amount);
 

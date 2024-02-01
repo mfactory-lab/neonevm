@@ -1,40 +1,28 @@
 import { readFileSync } from 'node:fs'
-import { ethers, network, upgrades } from 'hardhat'
-import { expect } from 'chai'
+import { ethers } from 'hardhat'
 
 const TOKEN_PATH = './assets/tokens/jsol.json'
 
 async function main() {
-  const [owner] = await ethers.getSigners()
-  const ERC20ForSPLFactory = await ethers.getContractFactory('ERC20ForSPL')
-
   const token = JSON.parse(String(readFileSync(TOKEN_PATH)))
 
-  console.log(`Owner ${owner.address}...`)
-  console.log(`Deploying token ${token.symbol}...`)
+  // const ERC20ForSplFactoryAddress = '0xF6b17787154C418d5773Ea22Afc87A95CAA3e957' // devnet
+  const ERC20ForSplFactoryAddress = '0x6B226a13F5FE3A5cC488084C08bB905533804720' // mainnet
+  const ERC20ForSplFactory = await ethers.getContractAt('ERC20ForSplFactory', ERC20ForSplFactoryAddress)
 
-  const ERC20ForSPL = await upgrades.deployProxy(ERC20ForSPLFactory, [
-    `0x${ethers.decodeBase58(token.address_spl).toString(16)}`,
-  ], {
-    kind: 'uups',
-    initializer: 'initializeParent',
+  const mint = `0x${ethers.decodeBase58(token.address_spl).toString(16)}`
+
+  const resp = await ERC20ForSplFactory.createErc20ForSpl(mint, {
+    // prevent gas limit error...
+    gasLimit: 65856000n,
   })
-  console.log(`Waiting for deployment...`)
-  await ERC20ForSPL.waitForDeployment()
+  console.log(resp)
 
-  const CONTRACT_OWNER = await ERC20ForSPL.owner()
-  const IMPLEMENTATION = await upgrades.erc1967.getImplementationAddress(ERC20ForSPL.target.toString())
+  const receipt = await resp.wait()
+  console.log(receipt)
 
-  console.log(`ERC20ForSPL proxy deployed to ${ERC20ForSPL.target}`)
-  console.log(`ERC20ForSPL implementation deployed to ${IMPLEMENTATION}`)
-
-  if (network.name === 'neondevnet') {
-    console.log(`https://devnet.neonscan.org/token/${ERC20ForSPL.target}`)
-  } else {
-    console.log(`https://neonscan.org/token/${ERC20ForSPL.target}`)
-  }
-
-  expect(owner.address).to.eq(CONTRACT_OWNER)
+  const addr = await ERC20ForSplFactory.getErc20ForSpl(mint)
+  console.log(addr)
 }
 
 main().catch((error) => {

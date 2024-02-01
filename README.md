@@ -2,8 +2,6 @@
 
 JPOOL Solana Token (JSOL) NeonEVM Deployment Scripts
 
-Deployment cost ~25 NEON
-
 # Usage
 
 devnet deployment (default network)

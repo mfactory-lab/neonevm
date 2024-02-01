@@ -12,13 +12,36 @@ dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) })
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: '0.8.23',
+    version: '0.8.0',
     settings: {
       optimizer: {
         enabled: true,
         runs: 1000,
       },
     },
+  },
+  etherscan: {
+    apiKey: {
+      neonevm: 'test',
+    },
+    customChains: [
+      {
+        network: 'neonevm',
+        chainId: 245022926,
+        urls: {
+          apiURL: 'https://devnet-api.neonscan.org/hardhat/verify',
+          browserURL: 'https://devnet.neonscan.org',
+        },
+      },
+      {
+        network: 'neonevm',
+        chainId: 245022934,
+        urls: {
+          apiURL: 'https://api.neonscan.org/hardhat/verify',
+          browserURL: 'https://neonscan.org',
+        },
+      },
+    ],
   },
   defaultNetwork: 'neondevnet',
   networks: {

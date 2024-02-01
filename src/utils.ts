@@ -6,7 +6,6 @@ import type {
   Signer,
   Transaction, TransactionSignature,
 } from '@solana/web3.js'
-import { solanaTransactionLog } from '@neonevm/token-transfer'
 import { base58, publicKey as publicKeySerializer, string as stringSerializer } from '@metaplex-foundation/umi-serializers'
 import type {
   DataV2Args,
@@ -20,6 +19,7 @@ import { createUmi } from '@metaplex-foundation/umi-bundle-defaults'
 import type { TransactionConfig } from 'web3-core'
 import type Web3 from 'web3'
 import { Connection, clusterApiUrl } from '@solana/web3.js'
+import { solanaTransactionLog } from '../packages/neon-token-transfer'
 
 export async function sendNeonTransaction(web3: Web3, tx: TransactionConfig, signer: string) {
   const signedTrx = await web3.eth.accounts.signTransaction(tx as any, signer)
